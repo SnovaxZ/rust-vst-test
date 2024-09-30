@@ -17,6 +17,8 @@ A very basic granular(?) delay that works weird.
 
 After installing [Rust](https://rustup.rs/), you can compile Myplug as follows:
 
+RENAME THE CARGO FOLDER TO .cargo
+
 ```shell
 cargo xtask bundle MYPLUG --release
 ```
