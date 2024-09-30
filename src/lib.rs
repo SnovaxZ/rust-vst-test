@@ -7,7 +7,7 @@ use std::{sync::Arc, usize};
 
 struct Myplug {
     params: Arc<MyplugParams>,
-    prevsample: [f32; 400000],
+    prevsample: Vec<f32>,
     iterdelay: usize,
     iterrepeats: usize,
     prev: usize,
@@ -33,7 +33,7 @@ impl Default for Myplug {
     fn default() -> Self {
         Self {
             params: Arc::new(MyplugParams::default()),
-            prevsample: [0.0; 400000],
+            prevsample: vec![0.0; 400000],
             iterdelay: 0,
             iterrepeats: 399999,
             prev: 399999,
@@ -78,7 +78,7 @@ impl Default for MyplugParams {
 }
 
 impl Plugin for Myplug {
-    const NAME: &'static str = "Myplug2";
+    const NAME: &'static str = "Myplug2.1";
     const VENDOR: &'static str = "SnovaxZ";
     const URL: &'static str = env!("CARGO_PKG_HOMEPAGE");
     const EMAIL: &'static str = "snovaxz@proton.me";
