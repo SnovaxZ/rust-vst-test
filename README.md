@@ -11,6 +11,8 @@ A very basic granular(?) delay that works weird.
 
 - Mode 5: adds second delay that is controlled with the delay parameter to go slower than the real delay.
 
+- Mode 6: switches around the n:th (set with mode6_ratio parameter) sample in the buffer
+
 
 
 ## Building
