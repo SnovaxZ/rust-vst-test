@@ -69,7 +69,7 @@ impl Default for MyplugParams {
             .with_string_to_value(formatters::s2v_f32_gain_to_db()),
             delay: IntParam::new("Delay", 0, IntRange::Linear { min: 1, max: 1000 })
                 .with_smoother(SmoothingStyle::None),
-            mode: IntParam::new("Mode", 1, IntRange::Linear { min: 1, max: 5 })
+            mode: IntParam::new("Mode", 1, IntRange::Linear { min: 1, max: 7 })
                 .with_smoother(SmoothingStyle::None),
             time: IntParam::new("Time", 1, IntRange::Linear { min: 1, max: 1000 })
                 .with_smoother(SmoothingStyle::None),
@@ -167,6 +167,8 @@ impl Plugin for Myplug {
                         if self.iterdelay > 199999 {
                             if self.iterdelay % 5 == 0 {
                                 self.iterrepeats -= 1;
+                            } else if self.iterdelay % 7 == 0 {
+                                self.iterrepeats += 2;
                             };
                         } else {
                             self.iterrepeats += 1;
@@ -180,6 +182,35 @@ impl Plugin for Myplug {
                     }
                     5 => {
                         *sample += prevsample + prevsample2;
+                    }
+                    6 => {
+                        *sample += prevsample;
+                        if self.iterdelay % 3 == 0 {
+                            if self.iterdelay % 2 == 0 {
+                                self.iterrepeats -= 3;
+                            } else {
+                                self.iterrepeats += 3;
+                            };
+                        };
+                    }
+                    7 => {
+                        *sample += prevsample + prevsample2;
+                        if self.iterdelay % 3 == 0 {
+                            if self.iterdelay % 2 == 0 {
+                                self.iterrepeats -= 3;
+                            } else {
+                                self.iterrepeats += 3;
+                            };
+                        };
+                        if self.iterdelay > 199999 {
+                            if self.iterdelay % 5 == 0 {
+                                self.iterrepeats -= 1;
+                            } else if self.iterdelay % 7 == 0 {
+                                self.iterrepeats += 2;
+                            };
+                        } else {
+                            self.iterrepeats += 1;
+                        }
                     }
                     _ => {}
                 };
