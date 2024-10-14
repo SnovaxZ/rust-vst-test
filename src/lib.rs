@@ -27,6 +27,8 @@ struct MyplugParams {
     pub mode: IntParam,
     #[id = "time"]
     pub time: IntParam,
+    #[id = "mode6-ratio"]
+    pub mode6_ratio: IntParam,
 }
 
 impl Default for Myplug {
@@ -72,6 +74,8 @@ impl Default for MyplugParams {
             mode: IntParam::new("Mode", 1, IntRange::Linear { min: 1, max: 7 })
                 .with_smoother(SmoothingStyle::None),
             time: IntParam::new("Time", 1, IntRange::Linear { min: 1, max: 1000 })
+                .with_smoother(SmoothingStyle::None),
+            mode6_ratio: IntParam::new("Mode6_ratio", 3, IntRange::Linear { min: 3, max: 21 })
                 .with_smoother(SmoothingStyle::None),
         }
     }
@@ -185,7 +189,7 @@ impl Plugin for Myplug {
                     }
                     6 => {
                         *sample += prevsample;
-                        if self.iterdelay % 3 == 0 {
+                        if self.iterdelay % self.params.mode6_ratio.smoothed.next() as usize == 0 {
                             if self.iterdelay % 2 == 0 {
                                 self.iterrepeats -= 3;
                             } else {
