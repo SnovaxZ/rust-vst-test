@@ -191,19 +191,23 @@ impl Plugin for Myplug {
                         *sample += prevsample;
                         if self.iterdelay % self.params.mode6_ratio.smoothed.next() as usize == 0 {
                             if self.iterdelay % 2 == 0 {
-                                self.iterrepeats -= 3;
+                                self.iterrepeats -=
+                                    self.params.mode6_ratio.smoothed.next() as usize;
                             } else {
-                                self.iterrepeats += 3;
+                                self.iterrepeats +=
+                                    self.params.mode6_ratio.smoothed.next() as usize;
                             };
                         };
                     }
                     7 => {
                         *sample += prevsample + prevsample2;
-                        if self.iterdelay % 3 == 0 {
+                        if self.iterdelay % self.params.mode6_ratio.smoothed.next() as usize == 0 {
                             if self.iterdelay % 2 == 0 {
-                                self.iterrepeats -= 3;
+                                self.iterrepeats -=
+                                    self.params.mode6_ratio.smoothed.next() as usize;
                             } else {
-                                self.iterrepeats += 3;
+                                self.iterrepeats +=
+                                    self.params.mode6_ratio.smoothed.next() as usize;
                             };
                         };
                         if self.iterdelay > 199999 {
